@@ -1,0 +1,12 @@
+{ 
+	"frame": [ "yellow"],
+	"x": 360,
+	"y": 640,
+	"lifespan": 2000,
+	"angle": { "min": 0, "max": 360, "steps" : 18 },
+	"speed": { "min": 200, "max": 200 },
+	"scale": { "start": 0.3, "end": 0 },
+	"quantity": 1,
+	"gravityY": 150,
+	"blendMode": "ADD"
+}

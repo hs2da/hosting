@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>공개sw</title>
+    <head>
+        <script type="text/javascript">
+        function callbackTestInner()
+        {
+             parent.callbackTest();
+        }
+        </script>
+    </head>
+	<style type = "text/css">
+            body{
+                background: #222222;
+                padding: 0px;
+                margin: 0px;
+            }
+            canvas{
+				display: block;
+                position: absolute;                
+                margin: 0;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border : 5px solid white;
+            } 
+            h1{
+                border : 5px solid red;
+            }
+
+            #gameResult{
+                position: absolute;
+                top : 10vh;
+                left : calc(50vw - 10vh);
+                height : 15vh;
+                width : 20vh;
+                border : 5px solid red;
+                background-color : white;
+                z-index: 1;
+                font-size : 15px;
+                transition: all 1s ease;
+            }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+     <script src = "http://code.jquery.com/jquery-1.7.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.4.0/dist/phaser.min.js"></script>	
+	<script src="js/dodge_solo.js"></script>
+</head>
+<body>
+    <div id = "tests" style = "display:none">
+        <h1>test</h1>
+    </div>
+
+    <div id = "gameResult">
+        <input type = "button" value = "Return" id = "Return">
+    </div>
+     <script type="text/javascript">
+    $(document).ready(function(){
+        var socket = io.connect(); //소켓 연결
+       $('#Return').click(function(){ //멀티 버튼 클릭시
+            alert('s');
+            callbackTestInner();
+            //socket.emit('Return');
+        });
+   });
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>main page</title>
+    <script>var roomNum=9999;</script>
+    <script>var Player;</script>
+    <style type = "text/css">
+        .iframe-class {
+            width: 95vw;
+            height: 95vh;
+            border: 1px solid red;
+            overflow: auto;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src = "http://code.jquery.com/jquery-1.7.1.js"></script>
+</head>
+<body>
+
+<iframe class="iframe-class" id="GP" src = "mainS.html"  scrolling="yes" align="center" name="f1" frameborder="0" style="display:block"></iframe>
+
+<form name="form1" id="form1" method="post">
+</form>
+<div id = "main" style = "display:block">
+    <h1>Ready Page</h1>
+</div>
+<div id = "start" style = "display:none">
+    <input type = "button" value = "start" id = "startgame">
+</div>
+<div id = "show" style = "display:none">
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var socket = io.connect(); //소켓 연결
+        $('#Multi').click(function(){ //멀티 버튼 클릭시
+            alert('s');
+            socket.emit('ready');
+            $('#main').attr('style','display:none');
+        });
+        $('#Solo').click(function(){ //솔로 버튼 클릭시
+            $('#main').attr('style','display:none');
+            $('#GP').attr('style','display:block');
+            $('#GP').attr('src',"solo.html");
+        });
+        $('#startgame').click(function(){  //방장의 게임시작 버튼 입력시
+            $('#show').attr('style','display:none');
+            $('#start').attr('style','display:none');
+            $('#GP').attr('style','display:block');
+            $('#GP').attr('src',"index2.html");
+            socket.emit('GS',{'GameRoom':roomNum});
+            //document.form1.submit(); //page 이동
+        });
+        socket.on('roomset',function(data){
+            if(roomNum==9999){
+                roomNum = data.roomNum;
+                Player = data.player;
+                var div = document.getElementById("show");
+                div.textContent = "당신의 방 번호는 : "+roomNum+"이고 "+Player+"번째 플레이어 입니다. 다른 플레이어를 기다려 주세요.";
+                var text = div.textContent;
+            }
+            if(Player==1){
+                $('#start').attr('style','display:block');
+            }
+            $('#show').attr('style','display:block');
+            /*if(Player==4){
+               socket.emit('GS',{'GameRoom':roomNum});
+               document.form1.submit(); //page 이동
+            }*/
+        });
+        socket.on('pageMove',function(data){
+            $('#GP').attr('style','display:block');
+            $('#GP').attr('src',"index2.html");
+            //if(roomNum==data.RoomNum){
+            //document.form1.submit(); //page 이동
+            //}
+        });
+        socket.on('GoFirst',function(data){
+            if(data == roomNum){
+                document.form1.submit(); //page 이동
+            }
+        });
+    });
+</script>
+</body>
+</html>

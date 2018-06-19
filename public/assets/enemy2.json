@@ -1,0 +1,12 @@
+{ 
+	"frame": [ "red"],
+	"x": 360,
+	"y": 640,
+    "lifespan": 2500,
+	"angle": { "start": 0, "end": 360, "steps": 36 },
+	"speed": 150,
+	"quantity": 7,
+	"scale": { "start": 0.3, "end": 0 },
+	"frequency": 77,
+	"blendMode": "ADD"
+}
